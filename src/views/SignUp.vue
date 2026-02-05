@@ -4,8 +4,8 @@ import userService from '@/services/userService';
 
 const state = reactive({
     signup: {
-        id: '',
-        pw: '',
+        uid: '',
+        upw: '',
         nm: '',
         gender: 2
     },
@@ -14,7 +14,7 @@ const state = reactive({
 
 const doSignUp = async () => {
     //비밀번호, 확인비밀번호 내용이 다르면 alert('비밀번호를 확인해 주세요') 그리고 메소드 종료
-    if(state.signup.pw !== state.checkPw) {
+    if(state.signup.upw !== state.checkPw) {
         alert('비밀번호를 확인해 주세요');
         return;
     }
@@ -25,8 +25,8 @@ const doSignUp = async () => {
 
 <template>
 <h3>회원 가입</h3>
-<div><label>아이디: <input type="text" v-model="state.signup.id"></label></div>
-<div><label>비밀번호: <input type="password" v-model="state.signup.pw"></label></div>
+<div><label>아이디: <input type="text" v-model="state.signup.uid"></label></div>
+<div><label>비밀번호: <input type="password" v-model="state.signup.upw"></label></div>
 <div><label>확인비밀번호: <input type="password" v-model="state.checkPw"></label></div>
 <div><label>이름: <input type="text" v-model="state.signup.nm"></label></div>
 <div>
