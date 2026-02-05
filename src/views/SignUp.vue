@@ -1,5 +1,6 @@
 <script setup>
 import { reactive } from 'vue';
+import userService from '@/services/userService';
 
 const state = reactive({
     signup: {
@@ -12,7 +13,13 @@ const state = reactive({
 })
 
 const doSignUp = async () => {
-    alert('회원가입이 완료되었습니다')
+    //비밀번호, 확인비밀번호 내용이 다르면 alert('비밀번호를 확인해 주세요') 그리고 메소드 종료
+    if(state.signup.pw !== state.checkPw) {
+        alert('비밀번호를 확인해 주세요');
+        return;
+    }
+    const result = await userService.signUp(state.signup);
+    console.log('result: ', result);
 }
 </script>
 
