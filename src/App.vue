@@ -7,6 +7,7 @@ import router from './router';
 <header>
     <router-link to="/signup">회원가입</router-link>
     <router-link to="/signin">로그인</router-link>
+    <router-link to="/board/write">글쓰기</router-link>
 </header>
 <main>
     <router-view />

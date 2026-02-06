@@ -5,8 +5,8 @@ import userService from '@/services/userService';
 const state = reactive({
   modeShowPw: false,
   signin: {
-    uid: 'mic2',
-    upw: '1212',
+    uid: 'qwqw',
+    upw: '1234',
   },
 });
 

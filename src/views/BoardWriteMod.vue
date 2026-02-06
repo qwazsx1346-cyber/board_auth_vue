@@ -1,5 +1,6 @@
 <script setup>
 import { reactive } from 'vue';
+import boardService from '@/services/boardService';
 const state = reactive({
     board: {
         title: '',
