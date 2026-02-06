@@ -1,6 +1,9 @@
 <script setup>
 import { reactive } from 'vue';
 import userService from '@/services/userService';
+import { useAuthenticationStore } from '@/stores/authentication';
+
+const authentication = useAuthenticationStore();
 
 const state = reactive({
   modeShowPw: false,
@@ -11,12 +14,14 @@ const state = reactive({
 });
 
 const changeModeShowPw = () => {
-  state.modeShowPw = !state.modeShowPw;
+    state.modeShowPw = !state.modeShowPw;
 };
 
 const signIn = async () => {
-  const result = await userService.signIn(state.signin);
-  console.log('result: ', result);
+    const result = await userService.signIn(state.signin);
+    console.log('result: ', result);
+
+    authentication.signIn(result.resultData);
 };
 </script>
 
