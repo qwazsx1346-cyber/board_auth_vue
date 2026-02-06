@@ -30,9 +30,9 @@ const doSignUp = async () => {
 <div><label>확인비밀번호: <input type="password" v-model="state.checkPw"></label></div>
 <div><label>이름: <input type="text" v-model="state.signup.nm"></label></div>
 <div>
-  성별: 
-  <label>남성<input type="radio" value="1" v-model="state.signup.gender"></label>
-  <label>여성<input type="radio" value="2" v-model="state.signup.gender"></label>
+    성별: 
+    <label>남성<input type="radio" value="1" v-model="state.signup.gender"></label>
+    <label>여성<input type="radio" value="2" v-model="state.signup.gender"></label>
 </div>
 <div><button @click="doSignUp">회원가입</button></div>
 </template>
