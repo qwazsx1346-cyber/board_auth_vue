@@ -18,17 +18,21 @@ const doSignout = async () => {
 
 <template>
 <header>
-    <router-link to="/" >홈</router-link>
-    <router-link to="/board/list" >리스트</router-link>
-    <div v-if="authentication.state.isSigned">
-        {{ authentication.state.signedUser.nm }}님 환영합니다.
-        <router-link to="/board/write">글쓰기</router-link>
-        <a href="" @click.prevent="doSignout">로그아웃</a>
-        <!--a태그는 기본적으로 href태그와 같이가야함 이게 있으면 클릭시 마우스커서가 손모양으로 바뀜-->
-    </div>
-    <div v-else>
-        <router-link to="/signup" >회원가입</router-link>
-        <router-link to="/signin">로그인</router-link>
+    <div>
+        <template v-if="authentication.state.isSigned">
+            <span class="usernm">{{ authentication.state.signedUser.nm }}님 환영합니다.</span>
+        </template>
+        <router-link to="/" >홈</router-link>
+        <router-link to="/board/list" >리스트</router-link>
+        <template v-if="authentication.state.isSigned">
+            <router-link to="/board/write">글쓰기</router-link>
+            <a href="" @click.prevent="doSignout">로그아웃</a>
+            <!--a태그는 기본적으로 href태그와 같이가야함 이게 있으면 클릭시 마우스커서가 손모양으로 바뀜-->
+        </template>
+        <template v-else>
+            <router-link to="/signup" >회원가입</router-link>
+            <router-link to="/signin">로그인</router-link>
+        </template>
     </div>
 </header>
 <main>
@@ -37,5 +41,5 @@ const doSignout = async () => {
 </template>
 
 <style scoped>
-
+.usernm {background-color: rgb(130, 233, 62);}
 </style>
