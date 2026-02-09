@@ -10,14 +10,21 @@ export const useAuthenticationStore = defineStore('authentication', () => {
         isSigned: false
     });
 
+    
     const signIn = signedUser => {
         state.isSigned = true;
         state.signedUser = signedUser;
     }
-
-    // return { state, signIn }; 동일 코드
-    return {
-        'state': state,
-        'signIn': signIn
+    
+    const signOut = () => {
+        state.isSigned = false;
+        state.signedUser = null;
     }
+
+    return { state, signIn, signOut };
+    // return {
+    //     'state': state,
+    //     'signIn': signIn,
+    //     'signOut': signOut
+    // } 위와 동일코드
 }, { persist: true });
