@@ -21,19 +21,18 @@ const getBoardMaxPage = async () => {
 
 const goToNowPage = async () => {
     const params = {
-      page: state.currentPage,
-      size: state.size
+        page: state.currentPage,
+        size: state.size
     };
     if(state.searchText) {
-      params.search_text = state.searchText;
+        params.search_text = state.searchText;
     }
     const result = await boardService.getBoardList( params );
     state.list = result.resultData;
 }
 
-onMounted(async () => {
-  getBoardMaxPage();
-  goToNowPage();
+onMounted( () => {
+    doSearch();
 });
 
 const goToPage = async (page) => {
@@ -84,7 +83,7 @@ const goToPrevPage = () => {
 <template>
 <h3>게시판 리스트</h3>
 <div><input type="search" v-model="state.searchText" @keyup.enter="doSearch">
-  <button @click="doSearch">검색</button>
+    <button @click="doSearch">검색</button>
 </div>
 <br>
 <div v-if="state.list.length === 0">게시글이 없습니다.</div>
