@@ -58,7 +58,7 @@ const pageGroupSize = 10;
 const currentGroup = computed( () => Math.ceil(state.currentPage / pageGroupSize) );
 //현재 그룹의 시작 페이지 번호
 const startPage = computed ( () => ((currentGroup.value - 1) * pageGroupSize +1) );
-const endPage = computed ( () => Math.min(currentGroup.value * pageGroupSize), state.maxPage );
+const endPage = computed ( () => Math.min(currentGroup.value * pageGroupSize, state.maxPage) );
 const displayedPages = computed( () => {
     const pages = [];
     for(let i=startPage.value; i<=endPage.value; i++) {
@@ -108,13 +108,15 @@ const goToPrevPage = () => {
         </tbody>
     </table>
     <div>{{ startPage }} {{ currentGroup }} {{ endPage }}</div>
-    <div class="listwidth">
-        <button @click="goToPrevPage">&lt;</button>
+    <div class="paging">
+        <button v-if="startPage > 1" @click="goToPage(1)">&lt;&lt;</button>
+        <button v-if="startPage > 1" @click="goToPrevPage">&lt;</button>
         <span class="page"v-for="item in displayedPages"
               :key="item" :class="{selected: item == state.currentPage}" @click="goToPage(item)">
           {{ item }}
         </span>
-        <button @click="goToNextPage">&gt;</button>
+        <button v-if="endPage < state.maxPage" @click="goToNextPage">&gt;</button>
+        <button v-if="endPage < state.maxPage" @click="goToPage(state.maxPage)">&gt;&gt;</button>
     </div>
 </div>
 </template>
@@ -126,4 +128,5 @@ table tbody tr:hover { background-color: aliceblue; cursor: pointer;}
 .page { cursor: pointer;}
 .page:not(:first-child) { margin-left: 8px; }
 .selected { color: red; font-weight: bold;}
+.paging { width: 100%; text-align: center; margin-top: 20px;}
 </style>
