@@ -18,7 +18,7 @@ class BoardService {
         return res.data;
     }
 
-    async findById(id) {
+    async getBoard(id) {
         const res = await axios.get(`${this.#url}/${id}`);
         return res.data;
     }

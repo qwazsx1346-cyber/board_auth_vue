@@ -2,7 +2,9 @@
 import { reactive } from 'vue';
 import userService from '@/services/userService';
 import { useAuthenticationStore } from '@/stores/authentication';
-import router from '@/router';
+import { useRouter } from 'vue-router';
+
+const router = useRouter();
 
 const authentication = useAuthenticationStore();
 
@@ -24,9 +26,7 @@ const signIn = async () => {
 
     authentication.signIn(result.resultData);
     alert('로그인에 성공하였습니다.');
-    router.push({
-      path: '/'
-    });
+    router.push('/');
 };
 </script>
 
