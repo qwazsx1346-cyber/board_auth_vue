@@ -28,6 +28,10 @@ const router = createRouter({
       path: '/board/list',
       component: BoardList,
     },
+    {
+      path: '/board/:id',
+      component: () => import('../views/BoardDetail.vue'),
+    },
   ],
 });
 

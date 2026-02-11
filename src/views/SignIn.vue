@@ -2,6 +2,7 @@
 import { reactive } from 'vue';
 import userService from '@/services/userService';
 import { useAuthenticationStore } from '@/stores/authentication';
+import router from '@/router';
 
 const authentication = useAuthenticationStore();
 
@@ -22,6 +23,10 @@ const signIn = async () => {
     console.log('result: ', result);
 
     authentication.signIn(result.resultData);
+    alert('로그인에 성공하였습니다.');
+    router.push({
+      path: '/'
+    });
 };
 </script>
 
