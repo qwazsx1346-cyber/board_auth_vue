@@ -17,7 +17,7 @@ onMounted( () => {
     //console.log('route.query.id: ', route.query.id);
 
     if(history.state.data) { //넘어왔는 데이터가 있다.
-        state.board = history.state.data;
+        state.board = history.state.data; //수정버튼을 클릭하면 얘때문에 id까지 같이 넘어온다
     }
 })
 

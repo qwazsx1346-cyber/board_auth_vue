@@ -10,7 +10,8 @@ const state = reactive({
     searchText: '',
     size: 50,
     currentPage: 1,
-    maxPage: 0
+    maxPage: 0,
+    relatedSearchList: []
 });
 
 const getBoardMaxPage = async () => {
@@ -49,6 +50,7 @@ const goToPage = async (page) => {
 };
 
 const doSearch = () => {
+    state.relatedSearchList = [];
     state.currentPage = 1;
     getBoardMaxPage();
     goToNowPage();
@@ -88,11 +90,41 @@ const goToPrevPage = () => {
     goToPage(prevPage);
 };
 
+let timer;
+
+const typing = () => {
+    if(timer) { clearTimeout(timer) }
+    timer = setTimeout(() => {
+        getRelatedTitles();
+    }, 500);
+}
+
+const getRelatedTitles = async () => {
+    if(state.searchText.length === 0) {
+        state.relatedSearchList = [];
+        return;
+    }
+    const params = { search_text: state.searchText }
+    const result = await boardService.getBoardRelatedTitles(params);
+    state.relatedSearchList = result.resultData;
+}
+
+const clickSearch = (idx) => {
+    state.searchText = state.relatedSearchList[idx];
+    doSearch();
+}
+
 </script>
 
 <template>
 <h3>게시판 리스트</h3>
-<div><input type="search" v-model="state.searchText" @keyup.enter="doSearch">
+<div class="search-container">
+    <input type="search" v-model="state.searchText" @keyup="typing" @keyup.enter="doSearch" class="input-type">
+    <div class="related-search-container" v-if="state.relatedSearchList.length > 0">
+        <div v-for="item, idx in state.relatedSearchList" @click="clickSearch(idx)">
+            {{ item }}
+        </div>
+    </div>
     <button @click="doSearch">검색</button>
 </div>
 <br>
@@ -131,6 +163,7 @@ const goToPrevPage = () => {
 </template>
 
 <style scoped>
+*
 table { border-collapse: collapse;}
 table td, table th {  border: 1px solid gray; padding: 10px;}
 table tbody tr:hover { background-color: aliceblue; cursor: pointer;}
@@ -138,4 +171,10 @@ table tbody tr:hover { background-color: aliceblue; cursor: pointer;}
 .page:not(:first-child) { margin-left: 8px; }
 .selected { color: red; font-weight: bold;}
 .paging { width: 100%; text-align: center; margin-top: 20px;}
+
+.search-container { position: relative }
+.input-type { width: 300px;}
+.related-search-container { position: absolute; left: 0; top: 25px; background-color: #fff; 
+                            z-index: 5; width: 300px; border: 1px solid #eee;
+                            padding: 5px; cursor: pointer;}
 </style>
