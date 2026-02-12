@@ -96,12 +96,13 @@ const typing = () => {
     if(timer) { clearTimeout(timer) }
     timer = setTimeout(() => {
         getRelatedTitles();
-    }, 500);
+    }, 700);
 }
 
 const getRelatedTitles = async () => {
     if(state.searchText.length === 0) {
         state.relatedSearchList = [];
+        doSearch();
         return;
     }
     const params = { search_text: state.searchText }
@@ -109,8 +110,8 @@ const getRelatedTitles = async () => {
     state.relatedSearchList = result.resultData;
 }
 
-const clickSearch = (idx) => {
-    state.searchText = state.relatedSearchList[idx];
+const selectRelatedTitle = title => {
+    state.searchText = title;
     doSearch();
 }
 
@@ -119,9 +120,10 @@ const clickSearch = (idx) => {
 <template>
 <h3>게시판 리스트</h3>
 <div class="search-container">
-    <input type="search" v-model="state.searchText" @keyup="typing" @keyup.enter="doSearch" class="input-type">
+    <input type="search" v-model="state.searchText" @keyup="typing" @keyup.enter="doSearch"
+            class="input-type" @change="textChange">
     <div class="related-search-container" v-if="state.relatedSearchList.length > 0">
-        <div v-for="item, idx in state.relatedSearchList" @click="clickSearch(idx)">
+        <div v-for="item in state.relatedSearchList" @click="selectRelatedTitle(item)">
             {{ item }}
         </div>
     </div>

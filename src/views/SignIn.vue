@@ -24,6 +24,11 @@ const signIn = async () => {
     const result = await userService.signIn(state.signin);
     console.log('result: ', result);
 
+    if(result.resultData === null) { //로그인 실패
+        alert( result.resultMessage );
+        return;
+    }
+
     authentication.signIn(result.resultData);
     alert('로그인에 성공하였습니다.');
     router.push('/');
